@@ -1,0 +1,22 @@
+{
+  "name": "K-Centroid",
+  "displayName": "K-Centroid Downsampling",
+  "description": "Clean downscaling for pixel art references.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Astropulse"
+  },
+  "contributors": [],
+  "publisher": "Astropulse",
+  "license": "CC-BY-4.0",
+  "categories": [
+    "Scripts"
+  ],
+  "contributes": {
+    "scripts": [
+      {
+        "path": "./extension.lua"
+      }
+    ]
+  }
+}
