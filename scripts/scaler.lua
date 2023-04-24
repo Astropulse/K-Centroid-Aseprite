@@ -1,7 +1,6 @@
 local scaler = {}
 
 function scaler:kCenter(width, height, colors, accuracy)
-
 	app.transaction(
 		function()
 			local image = app.activeCel.image
@@ -40,14 +39,10 @@ function kMeans(image, k, accuracy)
 
 	-- Convert the pixel data to a table of RGB values
 	local pixels = {}
-	for y = 0, image.height - 1 do
-		for x = 0, image.width - 1 do
-			local pixel = image:getPixel(x, y)
-			local r = app.pixelColor.rgbaR(pixel)
-			local g = app.pixelColor.rgbaG(pixel)
-			local b = app.pixelColor.rgbaB(pixel)
-			table.insert(pixels, {r = r, g = g, b = b})
-		end
+	pixels.size = image.width * image.height
+	for i = 1, pixels.size do
+		local pixel = image:getPixel((i - 1) % image.width, math.floor((i - 1) / image.width))
+		pixels[i] = {r = app.pixelColor.rgbaR(pixel), g = app.pixelColor.rgbaG(pixel), b = app.pixelColor.rgbaB(pixel)}
 	end
 
 	-- Initialize the centroids randomly
@@ -104,10 +99,7 @@ function kMeans(image, k, accuracy)
 	for y = 0, image.height - 1 do
 		for x = 0, image.width - 1 do
 			local pixel = image:getPixel(x, y)
-			local r = app.pixelColor.rgbaR(pixel)
-			local g = app.pixelColor.rgbaG(pixel)
-			local b = app.pixelColor.rgbaB(pixel)
-			local pixel = {r = r, g = g, b = b}
+			local pixel = {r = app.pixelColor.rgbaR(pixel), g = app.pixelColor.rgbaG(pixel), b = app.pixelColor.rgbaB(pixel)}
 			local min_dist = math.huge
 			local nearest_centroid
 			for i, centroid in ipairs(centroids) do

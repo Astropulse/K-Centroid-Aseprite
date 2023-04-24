@@ -168,7 +168,9 @@ function init(plugin)
                             id = "height",
                             text = tostring(math.min(height,dialog.data.height))
                         }
+                        --nClock = os.clock()
                         scaler:kCenter(dialog.data.width, dialog.data.height, dialog.data.centroids, dialog.data.accuracy)
+                        --print("Elapsed time is: " .. os.clock()-nClock)
                         dRatio = dialog.data.ratio
                         dialog:close()
                     end
