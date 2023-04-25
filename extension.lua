@@ -31,10 +31,32 @@ function init(plugin)
                     label = "Width:",
                     text = tostring(width),
                     decimals = 0,
+                    focus = true,
                     onchange = function()
                         dialog:modify{
                             id = "widthp",
                             text = tostring(math.min(100,(dialog.data.width/width)*100))
+                        }
+                        if dialog.data.ratio then
+                            dialog:modify{
+                                id = "heightp",
+                                text = tostring(math.min(100,dialog.data.widthp))
+                            }
+                            dialog:modify{
+                                id = "height",
+                                text = tostring(math.min(height,math.round((dialog.data.heightp/100)*height)))
+                            }
+                        end
+                    end
+                }
+                :number{
+                    id = "widthp",
+                    text = tostring(100),
+                    decimals = 4,
+                    onchange = function()
+                        dialog:modify{
+                            id = "width",
+                            text = tostring(math.min(width,math.round((dialog.data.widthp/100)*width)))
                         }
                         if dialog.data.ratio then
                             dialog:modify{
@@ -70,6 +92,27 @@ function init(plugin)
                         end
                     end
                 }
+                :number{
+                    id = "heightp",
+                    text = tostring(100),
+                    decimals = 4,
+                    onchange = function()
+                        dialog:modify{
+                            id = "height",
+                            text = tostring(math.min(height,math.round((dialog.data.heightp/100)*height)))
+                        }
+                        if dialog.data.ratio then
+                            dialog:modify{
+                                id = "widthp",
+                                text = tostring(math.min(100,dialog.data.heightp))
+                            }
+                            dialog:modify{
+                                id = "width",
+                                text = tostring(math.min(width,math.round((dialog.data.widthp/100)*width)))
+                            }
+                        end
+                    end
+                }
                 :check{
                     id = "ratio",
                     text = "Lock Ratio",
@@ -83,53 +126,6 @@ function init(plugin)
                             dialog:modify{
                                 id = "height",
                                 text = tostring(math.min(height,math.round((dialog.data.heightp/100)*height)))
-                            }
-                            dialog:modify{
-                                id = "width",
-                                text = tostring(math.min(width,math.round((dialog.data.widthp/100)*width)))
-                            }
-                        end
-                    end
-                }
-                :separator{
-                    text = "Percentage:"
-                }
-                :number{
-                    id = "widthp",
-                    label = "Width:",
-                    text = tostring(100),
-                    decimals = 4,
-                    onchange = function()
-                        dialog:modify{
-                            id = "width",
-                            text = tostring(math.min(width,math.round((dialog.data.widthp/100)*width)))
-                        }
-                        if dialog.data.ratio then
-                            dialog:modify{
-                                id = "heightp",
-                                text = tostring(math.min(100,dialog.data.widthp))
-                            }
-                            dialog:modify{
-                                id = "height",
-                                text = tostring(math.min(height,math.round((dialog.data.heightp/100)*height)))
-                            }
-                        end
-                    end
-                }
-                :number{
-                    id = "heightp",
-                    label = "Height:",
-                    text = tostring(100),
-                    decimals = 4,
-                    onchange = function()
-                        dialog:modify{
-                            id = "height",
-                            text = tostring(math.min(height,math.round((dialog.data.heightp/100)*height)))
-                        }
-                        if dialog.data.ratio then
-                            dialog:modify{
-                                id = "widthp",
-                                text = tostring(math.min(100,dialog.data.heightp))
                             }
                             dialog:modify{
                                 id = "width",
@@ -158,7 +154,6 @@ function init(plugin)
                 :separator()
                 :button{
                     text = "OK",
-                    focus = true,
                     onclick = function()
                         dialog:modify{
                             id = "width",
